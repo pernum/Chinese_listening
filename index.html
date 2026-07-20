@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>听写对策 | 中国語リスニング書き取り対策</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Zhi+Mang+Xing&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#20241f;
+    --ink-soft:#454f42;
+    --paper:#efe9dd;
+    --paper2:#e4dcc8;
+    --paper-line: rgba(32,36,31,0.16);
+    --seal:#b23a2e;
+    --seal-dark:#8a2c22;
+    --jade:#4f6f5c;
+    --jade-soft:#c7d6c9;
+    --gold:#b5893c;
+    --shadow: 0 6px 18px rgba(32,36,31,0.14);
+    --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at top left, rgba(178,58,46,0.05), transparent 45%),
+      radial-gradient(ellipse at bottom right, rgba(79,111,92,0.06), transparent 45%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans JP', 'Inter', sans-serif;
+    line-height:1.6;
+    padding: 0 0 80px 0;
+  }
+
+  /* ---------- Header ---------- */
+  header.hero{
+    position:relative;
+    padding: 56px 24px 44px;
+    text-align:center;
+    border-bottom: 1px solid var(--paper-line);
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size: 34px 34px;
+    opacity:0.5;
+    mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+  }
+  .eyebrow{
+    position:relative;
+    display:inline-block;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--jade);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  h1.title{
+    position:relative;
+    font-family:'Noto Serif SC', serif;
+    font-weight:900;
+    font-size: clamp(40px, 8vw, 68px);
+    margin:0 0 6px;
+    letter-spacing:0.04em;
+    color:var(--ink);
+  }
+  h1.title .accent{ color: var(--seal); }
+  .subtitle{
+    position:relative;
+    font-size:15px;
+    color: var(--ink-soft);
+    font-weight:500;
+    max-width:520px;
+    margin: 0 auto;
+  }
+  .stamp{
+    position:absolute;
+    top: 28px; right: 28px;
+    width:74px; height:74px;
+    border:3px solid var(--seal);
+    border-radius:6px;
+    color:var(--seal);
+    font-family:'Noto Serif SC',serif;
+    font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px;
+    line-height:1.2;
+    text-align:center;
+    transform: rotate(-8deg);
+    opacity:0.85;
+    writing-mode: vertical-rl;
+    letter-spacing:0.15em;
+    padding: 6px 3px;
+  }
+  @media (max-width:640px){ .stamp{ display:none; } }
+
+  .voice-status{
+    position:relative;
+    margin-top:22px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    background:rgba(255,255,255,0.5);
+    border:1px solid var(--paper-line);
+    padding:7px 14px;
+    border-radius:20px;
+  }
+  .dot{ width:7px;height:7px;border-radius:50%; background:var(--jade); }
+  .dot.warn{ background:var(--seal); }
+  select#voiceSelect, select#rateSelect{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    border:none;
+    background:transparent;
+    color:var(--ink);
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  main{ max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Section header ---------- */
+  .section{ margin-top: 64px; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom: 26px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+  }
+  .section-num{
+    font-family:'Noto Serif SC',serif;
+    font-weight:900;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink);
+    padding:4px 10px;
+    border-radius:3px;
+  }
+  .section-head h2{
+    font-family:'Noto Serif SC',serif;
+    font-size:26px;
+    margin:0;
+    font-weight:700;
+  }
+  .section-head .jp{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  .section-head .count{
+    margin-left:auto;
+    font-size:12px;
+    color:var(--ink-soft);
+    font-family:'Inter',sans-serif;
+  }
+
+  /* ---------- Vocab grid (田字格 motif) ---------- */
+  .vocab-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+    gap:14px;
+  }
+  .vocab-card{
+    position:relative;
+    background: #f7f3ea;
+    border:1.5px solid var(--ink);
+    border-radius:2px;
+    padding:14px 10px 12px;
+    text-align:center;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .vocab-card::before, .vocab-card::after{
+    content:"";
+    position:absolute;
+    background: var(--paper-line);
+  }
+  .vocab-card::before{ top:0; bottom:0; left:50%; width:1px; }
+  .vocab-card::after{ left:0; right:0; top:50%; height:1px; }
+  .vocab-card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
+  .vocab-card .no{
+    position:relative;
+    font-size:10px;
+    color:var(--ink-soft);
+    font-family:'Inter',sans-serif;
+    text-align:left;
+    margin-bottom:2px;
+  }
+  .vocab-card .hanzi{
+    position:relative;
+    font-family:'Noto Serif SC', serif;
+    font-weight:700;
+    font-size: clamp(20px, 4vw, 26px);
+    letter-spacing:0.03em;
+    margin: 6px 0 4px;
+  }
+  .vocab-card .pinyin{
+    position:relative;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color: var(--jade);
+    font-weight:600;
+  }
+  .play-btn{
+    position:relative;
+    margin-top:10px;
+    width:32px; height:32px;
+    border-radius:50%;
+    border:1.5px solid var(--seal);
+    background: var(--seal);
+    color:#fff;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition: transform .12s ease, background .12s ease;
+  }
+  .play-btn:hover{ background:var(--seal-dark); transform: scale(1.08); }
+  .play-btn:active{ transform: scale(0.94); }
+  .play-btn svg{ width:14px; height:14px; }
+  .play-btn.playing{ animation: pulse 0.9s ease infinite; }
+  @keyframes pulse{ 0%,100%{ box-shadow: 0 0 0 0 rgba(178,58,46,0.4);} 50%{ box-shadow: 0 0 0 6px rgba(178,58,46,0);} }
+
+  /* ---------- Sentence list ---------- */
+  .sentence-list{ display:flex; flex-direction:column; gap:2px; }
+  .sentence-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding: 14px 6px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .sentence-row .idx{
+    font-family:'Noto Serif SC',serif;
+    font-weight:700;
+    font-size:14px;
+    color: var(--seal);
+    width:22px;
+    flex-shrink:0;
+  }
+  .sentence-row .text-block{ flex:1; min-width:0; }
+  .sentence-row .hanzi{
+    font-family:'Noto Serif SC',serif;
+    font-size:18px;
+    font-weight:600;
+  }
+  .sentence-row .pinyin{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color: var(--jade);
+    margin-top:2px;
+    font-weight:500;
+  }
+  .sentence-row .play-btn{ margin-top:0; width:36px; height:36px; }
+  .sentence-row .play-btn svg{ width:15px; height:15px; }
+
+  /* ---------- Test module ---------- */
+  .test-panel{
+    margin-top: 30px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    padding: 28px 26px;
+    position:relative;
+    overflow:hidden;
+  }
+  .test-panel::before{
+    content:"聽寫";
+    position:absolute;
+    right:-10px; top:-30px;
+    font-family:'Noto Serif SC',serif;
+    font-size:130px;
+    font-weight:900;
+    color: rgba(255,255,255,0.04);
+    writing-mode: vertical-rl;
+    pointer-events:none;
+  }
+  .test-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom: 18px;
+    flex-wrap:wrap;
+  }
+  .test-head h3{
+    font-family:'Noto Serif SC',serif;
+    font-size:19px;
+    margin:0;
+    font-weight:700;
+  }
+  .test-head .jp-note{ font-size:12px; color: rgba(239,233,221,0.65); margin-top:4px;}
+  .progress-pill{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    background: rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.18);
+    padding:5px 12px;
+    border-radius:20px;
+  }
+  .test-stage{
+    position:relative;
+    background: rgba(255,255,255,0.05);
+    border:1px dashed rgba(255,255,255,0.28);
+    border-radius:6px;
+    padding: 36px 20px;
+    text-align:center;
+    min-height: 130px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+  }
+  .test-stage .placeholder{ color: rgba(239,233,221,0.55); font-size:13.5px; }
+  .test-stage .answer .hanzi{
+    font-family:'Noto Serif SC',serif;
+    font-size:26px;
+    font-weight:700;
+  }
+  .test-stage .answer .pinyin{
+    font-family:'Inter',sans-serif;
+    color: var(--jade-soft);
+    font-size:14px;
+    margin-top:6px;
+    font-weight:600;
+  }
+  .big-play{
+    width:60px; height:60px;
+    border-radius:50%;
+    background: var(--seal);
+    border:none;
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition: transform .12s ease;
+  }
+  .big-play:hover{ transform: scale(1.06); }
+  .big-play svg{ width:24px; height:24px; }
+
+  .test-controls{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:20px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding: 10px 18px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: var(--paper);
+    cursor:pointer;
+    transition: background .12s ease, border-color .12s ease;
+  }
+  .btn:hover{ background: rgba(255,255,255,0.1); }
+  .btn.primary{ background: var(--seal); border-color: var(--seal); }
+  .btn.primary:hover{ background: var(--seal-dark); }
+  .btn:disabled{ opacity:0.35; cursor:not-allowed; }
+  .btn:disabled:hover{ background:transparent; }
+
+  footer{
+    text-align:center;
+    margin-top: 70px;
+    font-size:12px;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="stamp">早稲田大学</div>
+  <div class="eyebrow">Chinese Listening &amp; Dictation Drill</div>
+  <h1 class="title">听写<span class="accent">对策</span></h1>
+  <p class="subtitle">中国語リスニング書き取り試験対策ページ ― 単語25問・文章15問<br>再生ボタンで音声を確認し、各セクション末尾のランダムテストで実力チェック</p>
+  <div class="voice-status">
+    <span class="dot" id="voiceDot"></span>
+    <span id="voiceLabel">音声を確認中…</span>
+    <span style="opacity:.4;">|</span>
+    <label>声：<select id="voiceSelect"></select></label>
+    <span style="opacity:.4;">|</span>
+    <label>速度：<select id="rateSelect">
+      <option value="0.7">遅い</option>
+      <option value="0.85" selected>やや遅い</option>
+      <option value="1">普通</option>
+    </select></label>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= VOCAB SECTION ================= -->
+  <section class="section" id="vocab-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>单词 <span class="jp">単語</span></h2>
+      <span class="count">25 問</span>
+    </div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+
+    <div class="test-panel" id="vocabTest">
+      <div class="test-head">
+        <div>
+          <h3>抽认测试 <span style="font-weight:400;font-size:13px;opacity:.7;">単語ランダム再生テスト</span></h3>
+          <div class="jp-note">再生される音声を聞いて、漢字とピンインを書き取ってみましょう。</div>
+        </div>
+        <span class="progress-pill" id="vocabProgress">0 / 25</span>
+      </div>
+      <div class="test-stage">
+        <button class="big-play" id="vocabBigPlay" title="再生">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div id="vocabAnswerArea" class="placeholder">「テストを始める」を押してスタート</div>
+      </div>
+      <div class="test-controls">
+        <button class="btn primary" id="vocabStartBtn">テストを始める</button>
+        <button class="btn" id="vocabRevealBtn" disabled>答えを表示</button>
+        <button class="btn" id="vocabNextBtn" disabled>次の問題</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SENTENCE SECTION ================= -->
+  <section class="section" id="sentence-section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>文章 <span class="jp">短文</span></h2>
+      <span class="count">15 問</span>
+    </div>
+    <div class="sentence-list" id="sentenceList"></div>
+
+    <div class="test-panel" id="sentenceTest">
+      <div class="test-head">
+        <div>
+          <h3>抽认测试 <span style="font-weight:400;font-size:13px;opacity:.7;">文章ランダム再生テスト</span></h3>
+          <div class="jp-note">文全体を聞き取って書き取る練習です。必要なら再生ボタンで聞き直せます。</div>
+        </div>
+        <span class="progress-pill" id="sentenceProgress">0 / 15</span>
+      </div>
+      <div class="test-stage">
+        <button class="big-play" id="sentenceBigPlay" title="再生">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div id="sentenceAnswerArea" class="placeholder">「テストを始める」を押してスタート</div>
+      </div>
+      <div class="test-controls">
+        <button class="btn primary" id="sentenceStartBtn">テストを始める</button>
+        <button class="btn" id="sentenceRevealBtn" disabled>答えを表示</button>
+        <button class="btn" id="sentenceNextBtn" disabled>次の問題</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>音声はブラウザの音声合成機能（Web Speech API）を利用しています。環境により中国語音声が無い場合があります。</footer>
+
+<script>
+/* ---------------- Data ---------------- */
+const vocab = [
+  {hanzi:"学汉语", pinyin:"xué hànyǔ"},
+  {hanzi:"电脑", pinyin:"diànnǎo"},
+  {hanzi:"学生", pinyin:"xuésheng"},
+  {hanzi:"两本词典", pinyin:"liǎng běn cídiǎn"},
+  {hanzi:"手机", pinyin:"shǒujī"},
+  {hanzi:"日本", pinyin:"Rìběn"},
+  {hanzi:"做作业", pinyin:"zuò zuòyè"},
+  {hanzi:"公园", pinyin:"gōngyuán"},
+  {hanzi:"买杂志", pinyin:"mǎi zázhì"},
+  {hanzi:"钱包", pinyin:"qiánbāo"},
+  {hanzi:"中国", pinyin:"Zhōngguó"},
+  {hanzi:"书包", pinyin:"shūbāo"},
+  {hanzi:"便利店", pinyin:"biànlìdiàn"},
+  {hanzi:"五瓶啤酒", pinyin:"wǔ píng píjiǔ"},
+  {hanzi:"留学生", pinyin:"liúxuéshēng"},
+  {hanzi:"一个人", pinyin:"yí gè rén"},
+  {hanzi:"吃饭", pinyin:"chīfàn"},
+  {hanzi:"课本", pinyin:"kèběn"},
+  {hanzi:"教室", pinyin:"jiàoshì"},
+  {hanzi:"两节课", pinyin:"liǎng jié kè"},
+  {hanzi:"美国", pinyin:"Měiguó"},
+  {hanzi:"看书", pinyin:"kànshū"},
+  {hanzi:"一张票", pinyin:"yì zhāng piào"},
+  {hanzi:"洗手间", pinyin:"xǐshǒujiān"},
+  {hanzi:"老师", pinyin:"lǎoshī"}
+];
+
+const sentences = [
+  {hanzi:"我去图书馆，你呢？", pinyin:"Wǒ qù túshūguǎn, nǐ ne?"},
+  {hanzi:"你喜欢什么？", pinyin:"Nǐ xǐhuan shénme?"},
+  {hanzi:"这是谁的电脑？", pinyin:"Zhè shì shéi de diànnǎo?"},
+  {hanzi:"你今天有几节课？", pinyin:"Nǐ jīntiān yǒu jǐ jié kè?"},
+  {hanzi:"咱们一起看吧！", pinyin:"Zánmen yìqǐ kàn ba!"},
+  {hanzi:"北京有很多世界遗产吧。", pinyin:"Běijīng yǒu hěn duō shìjiè yíchǎn ba."},
+  {hanzi:"我不是老师，是学生。", pinyin:"Wǒ bú shì lǎoshī, shì xuésheng."},
+  {hanzi:"我的专业是数学，你呢？", pinyin:"Wǒ de zhuānyè shì shùxué, nǐ ne?"},
+  {hanzi:"这是学校的。", pinyin:"Zhè shì xuéxiào de."},
+  {hanzi:"化学很难，不过很有意思。", pinyin:"Huàxué hěn nán, búguò hěn yǒuyìsi."},
+  {hanzi:"买什么杂志？", pinyin:"Mǎi shénme zázhì?"},
+  {hanzi:"我老家在北京。", pinyin:"Wǒ lǎojiā zài Běijīng."},
+  {hanzi:"你叫什么名字？", pinyin:"Nǐ jiào shénme míngzi?"},
+  {hanzi:"欢迎你来玩儿。", pinyin:"Huānyíng nǐ lái wánr."},
+  {hanzi:"你去哪儿？", pinyin:"Nǐ qù nǎr?"}
+];
+
+/* ---------------- Speech setup ---------------- */
+let zhVoice = null;
+const synth = window.speechSynthesis;
+
+function pickVoice(){
+  const voices = synth.getVoices();
+  const sel = document.getElementById('voiceSelect');
+  const zhVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('zh'));
+  sel.innerHTML = '';
+  if(zhVoices.length === 0){
+    document.getElementById('voiceDot').classList.add('warn');
+    document.getElementById('voiceLabel').textContent = '中国語音声が見つかりません（他のブラウザ/OSをお試しください）';
+    return;
+  }
+  zhVoices.forEach((v,i)=>{
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = v.name + ' (' + v.lang + ')';
+    sel.appendChild(opt);
+  });
+  zhVoice = zhVoices[0];
+  document.getElementById('voiceDot').classList.remove('warn');
+  document.getElementById('voiceLabel').textContent = '音声準備OK';
+  sel.onchange = () => { zhVoice = zhVoices[sel.value]; };
+}
+if(synth){
+  pickVoice();
+  synth.onvoiceschanged = pickVoice;
+} else {
+  document.getElementById('voiceLabel').textContent = 'このブラウザは音声合成に対応していません';
+  document.getElementById('voiceDot').classList.add('warn');
+}
+
+function speak(text, onEndCb){
+  if(!synth) return;
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  if(zhVoice) u.voice = zhVoice;
+  u.lang = 'zh-CN';
+  u.rate = parseFloat(document.getElementById('rateSelect').value);
+  if(onEndCb) u.onend = onEndCb;
+  synth.speak(u);
+}
+
+/* ---------------- Render vocab grid ---------------- */
+const vocabGrid = document.getElementById('vocabGrid');
+vocab.forEach((item, i) => {
+  const card = document.createElement('div');
+  card.className = 'vocab-card';
+  card.innerHTML = `
+    <div class="no">${String(i+1).padStart(2,'0')}</div>
+    <div class="hanzi">${item.hanzi}</div>
+    <div class="pinyin">${item.pinyin}</div>
+    <button class="play-btn" aria-label="再生">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+  `;
+  const btn = card.querySelector('.play-btn');
+  const trigger = () => {
+    btn.classList.add('playing');
+    speak(item.hanzi, () => btn.classList.remove('playing'));
+  };
+  btn.onclick = (e) => { e.stopPropagation(); trigger(); };
+  card.onclick = trigger;
+  vocabGrid.appendChild(card);
+});
+
+/* ---------------- Render sentence list ---------------- */
+const sentenceList = document.getElementById('sentenceList');
+sentences.forEach((item, i) => {
+  const row = document.createElement('div');
+  row.className = 'sentence-row';
+  row.innerHTML = `
+    <div class="idx">${i+1}</div>
+    <button class="play-btn" aria-label="再生">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="text-block">
+      <div class="hanzi">${item.hanzi}</div>
+      <div class="pinyin">${item.pinyin}</div>
+    </div>
+  `;
+  const btn = row.querySelector('.play-btn');
+  btn.onclick = () => {
+    btn.classList.add('playing');
+    speak(item.hanzi, () => btn.classList.remove('playing'));
+  };
+  sentenceList.appendChild(row);
+});
+
+/* ---------------- Random test module (generic) ---------------- */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function setupTest(data, ids){
+  const bigPlay = document.getElementById(ids.bigPlay);
+  const answerArea = document.getElementById(ids.answerArea);
+  const startBtn = document.getElementById(ids.startBtn);
+  const revealBtn = document.getElementById(ids.revealBtn);
+  const nextBtn = document.getElementById(ids.nextBtn);
+  const progress = document.getElementById(ids.progress);
+
+  let order = [];
+  let pos = -1;
+
+  function total(){ return data.length; }
+
+  function updateProgress(){
+    progress.textContent = (pos+1) + ' / ' + total();
+  }
+
+  function loadCurrent(playAfter){
+    answerArea.className = 'placeholder';
+    answerArea.textContent = '再生ボタンを押して聞き取りましょう（第 ' + (pos+1) + ' 問）';
+    revealBtn.disabled = false;
+    nextBtn.disabled = (pos >= order.length - 1);
+    updateProgress();
+    if(playAfter) playCurrent();
+  }
+
+  function playCurrent(){
+    const item = data[order[pos]];
+    bigPlay.classList.add('playing');
+    speak(item.hanzi, () => bigPlay.classList.remove('playing'));
+  }
+
+  startBtn.onclick = () => {
+    order = shuffle(data.map((_,i)=>i));
+    pos = 0;
+    startBtn.textContent = 'テストを再スタート';
+    loadCurrent(true);
+  };
+
+  bigPlay.onclick = () => {
+    if(pos === -1){ startBtn.click(); return; }
+    playCurrent();
+  };
+
+  revealBtn.onclick = () => {
+    const item = data[order[pos]];
+    answerArea.className = 'answer';
+    answerArea.innerHTML = `<div class="hanzi">${item.hanzi}</div><div class="pinyin">${item.pinyin}</div>`;
+  };
+
+  nextBtn.onclick = () => {
+    if(pos < order.length - 1){
+      pos++;
+      loadCurrent(true);
+    }
+    if(pos >= order.length - 1){
+      nextBtn.disabled = true;
+      nextBtn.textContent = '最後の問題です';
+    }
+  };
+}
+
+setupTest(vocab, {
+  bigPlay:'vocabBigPlay', answerArea:'vocabAnswerArea',
+  startBtn:'vocabStartBtn', revealBtn:'vocabRevealBtn',
+  nextBtn:'vocabNextBtn', progress:'vocabProgress'
+});
+
+setupTest(sentences, {
+  bigPlay:'sentenceBigPlay', answerArea:'sentenceAnswerArea',
+  startBtn:'sentenceStartBtn', revealBtn:'sentenceRevealBtn',
+  nextBtn:'sentenceNextBtn', progress:'sentenceProgress'
+});
+</script>
+
+</body>
+</html>
